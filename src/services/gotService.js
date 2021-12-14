@@ -32,15 +32,15 @@ export default class GotService {
 }
 
 
-// const got = new GotService;
+const got = new GotService();
 
-// got.getAllCharacters()
-//     .then(res => console.log(res));
+got.getAllCharacters()
+    .then(res => console.log(res));
 
-// got.getCharacters(130)
-//     .then(res => console.log(res));
+got.getCharacter(130)
+    .then(res => console.log(res));
 
-// got.getAllCharacters()
-//     .then(res => {
-//         res.forEach( item => console.log(item.name));
-//     });
+got.getAllCharacters()
+    .then(res => {
+        res.forEach( item => console.log(item.name));
+    });
