@@ -77,6 +77,11 @@ export default class RandomChar extends Component {
     }
 
     onCharLoaded = (char) => {
+        for (let value in char) {
+            if (char[value] === ''){
+                char[value] = 'no data'
+            }
+        }
         this.setState({char, loading: false})
     }
 
