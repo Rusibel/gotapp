@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-// import './randomChar.css';
 import GotService from '../../services/gotService';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
@@ -57,9 +56,16 @@ const RandomCharLinksTitle = styled.span`
 `;
 
 export default class RandomChar extends Component {
-    constructor(){
-        super();
+
+    componentDidMount() {
+        console.log('mounting');
         this.updateChar();
+        this.timerId = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount() {
+        console.log('unmounting');
+        clearInterval(this.timerId);
     }
 
     gotService = new GotService() ;
@@ -77,16 +83,13 @@ export default class RandomChar extends Component {
     }
 
     onCharLoaded = (char) => {
-        for (let value in char) {
-            if (char[value] === ''){
-                char[value] = 'no data'
-            }
-        }
+
         this.setState({char, loading: false})
     }
 
-    updateChar(){
-        const id = Math.floor(Math.random()*140 + 25);
+    updateChar = () => {
+        // console.log('update');
+        const id = Math.floor(Math.random()*140 + 250);
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError)
@@ -94,6 +97,7 @@ export default class RandomChar extends Component {
 
 
     render() {
+        console.log('render');
         const {char, loading, error} = this.state;
 
         const errorMessage = error ? <ErrorMessage/> : null;

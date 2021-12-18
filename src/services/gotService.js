@@ -37,12 +37,18 @@ export default class GotService {
     }
 
     _transformCharacter(char){
+        for (let value in char) {
+            if (char[value] === ''){
+                char[value] = 'no data'
+            }
+        }
         return {
             name: char.name,
             gender: char.gender,
             born: char.born,
             died: char.died,
-            culture: char.culture
+            culture: char.culture,
+            id: char.url.replace(/[\D]/g, '')
         }
     }
 

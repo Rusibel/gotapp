@@ -1,15 +1,25 @@
 import React from 'react';
-import './errorMessage.css'
+import styled from 'styled-components';
 import img from './error.jpg'
+
+const Image = styled.img`
+    display: block;
+    margin: auto auto;
+`
+const TextError = styled.span`
+    display: flex;
+    justify-content: center;
+`
+
+
 
 
 const ErrorMessage = () => {
     return (
         <>
             {/* <img src={process.env.PUBLIC_URL+'/img/error.jpg'} alt='error'></img><br></br> */}
-            <img src={img} alt='error'></img><br></br>
-
-            <span>Something goes wrong, mathafucker</span>
+            <Image src={img} alt='error'></Image><br></br>
+            <TextError>Something goes wrong, mathafucker</TextError>
         </>
 
     )

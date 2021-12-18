@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import GotService from '../../services/gotService';
 import styled from 'styled-components';
-// import './charDetails.css';
+
 
 const CharsDetails = styled.div`
     background-color: #fff;
@@ -51,31 +52,73 @@ const CharsDetailsLinksTitle = styled.span`
     font-weight: bold;  
 `;
 
+const SelectError = styled.span`
+    color: #fff;
+    text-align: center;
+    font-size: 26px;
+`
 
 export default class CharDetails extends Component {
 
+    gotService = new GotService() ;
+    state = {
+        char: null
+    }
+
+    componentDidMount(){
+        this.updateChar();
+    }
+
+    componentDidUpdate(prevProps){
+        if (this.props.charId !== prevProps.charId){
+            this.updateChar()
+        }
+
+    }
+
+    updateChar(){
+        const {charId} = this.props;
+
+        if (!charId){
+            return;
+        }
+
+        this.gotService.getCharacter(charId)
+            .then((char) => {
+                this.setState({char})
+            })
+    }
+
+
     render() {
+
+        if(!this.state.char){
+            return <SelectError> Please select a character</SelectError>
+        }
+        const {char} = this.state;
+        const {name, gender, born, died, culture} = char;
+
         return (
             <CharsDetails>
-                <CharsDetailsTitle>John Snow
+                <CharsDetailsTitle>{name}
 
                 </CharsDetailsTitle>
                 <CharsDetailsLinksList>
                     <CharsDetailsLinks>
                         <CharsDetailsLinksTitle>Gender</CharsDetailsLinksTitle>
-                        <span>male</span>
+                        <span>{gender}</span>
                     </CharsDetailsLinks>
                     <CharsDetailsLinks>
                         <CharsDetailsLinksTitle>Born</CharsDetailsLinksTitle>
-                        <span>1783</span>
+                        <span>{born}</span>
                     </CharsDetailsLinks>
                     <CharsDetailsLinks>
                         <CharsDetailsLinksTitle>Died</CharsDetailsLinksTitle>
-                        <span>1820</span>
+                        <span>{died}</span>
                     </CharsDetailsLinks>
                     <CharsDetailsLinks>
                         <CharsDetailsLinksTitle>Culture</CharsDetailsLinksTitle>
-                        <span>First</span>
+                        <span>{culture}</span>
                     </CharsDetailsLinks>
                 </CharsDetailsLinksList>
             </CharsDetails>

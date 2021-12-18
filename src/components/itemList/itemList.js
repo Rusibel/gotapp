@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import './itemList.css';
+import GotService from '../../services/gotService';
+import Spinner from '../spinner';
+
 
 const ItemsList = styled.div`
     display: -webkit-box;
@@ -29,18 +31,49 @@ const ItemsListItem = styled.div`
 `;
 export default class ItemList extends Component {
 
+    gotService = new GotService() ;
+    state ={
+        charList: null
+    }
+
+    componentDidMount() {
+        this.gotService.getAllCharacters()
+            .then((charList) => {
+                this.setState({
+                    charList
+                })
+            })
+
+    }
+
+    // }
+    
+    renderItems(arr) {
+        return arr.map((item, i) => {
+            return (
+                <ItemsListItem 
+                    key={item.id}
+                    onClick={() => this.props.onCharSelected(item.id)}
+                    >
+                    {item.name}
+                </ItemsListItem>
+            )
+        })
+    }
+
     render() {
+        const{charList} = this.state;
+
+
+        if(!charList){
+            return <Spinner/>;
+        }
+        
+        const items = this.renderItems(charList);
+
         return (
             <ItemsList >
-                <ItemsListItem>
-                    John Snow
-                </ItemsListItem>
-                <ItemsListItem>
-                    Brandon Stark
-                </ItemsListItem>
-                <ItemsListItem>
-                    Geremy
-                </ItemsListItem>
+                {items}
             </ItemsList>
         );
     }
