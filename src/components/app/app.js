@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Col, Row, Container} from 'reactstrap';
+import GotService from '../../services/gotService';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
-import CharacterPage from '../characterPage';
+import CharacterPage from '../pages/characterPage';
+import BooksPage from '../pages/booksPage';
+import HousesPage from '../pages/housesPage';
 
 const Button = styled.button`
     background-color: #fff;
@@ -13,7 +16,7 @@ const Button = styled.button`
     padding: 5px 15px;
 `
 class App extends Component {
-
+    gotService = new GotService();
     state = {
         randomCharVisibility: true,
         error: false
@@ -57,8 +60,8 @@ class App extends Component {
                     </Row>
                     <Button onClick={this.onToogle}> Toogle randomChar </Button>
                     <CharacterPage/>
-                    <CharacterPage/>
-                    <CharacterPage/>
+                    <BooksPage/>
+                    <HousesPage/>
                 </Container>
             </>
         );  
