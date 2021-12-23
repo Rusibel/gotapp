@@ -8,6 +8,13 @@ import ErrorMessage from '../errorMessage';
 import CharacterPage from '../pages/characterPage';
 import BooksPage from '../pages/booksPage';
 import HousesPage from '../pages/housesPage';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    // Link
+  } from "react-router-dom";
+import { BooksItem } from '../pages/booksPage';
 
 const Button = styled.button`
     background-color: #fff;
@@ -48,22 +55,33 @@ class App extends Component {
         } 
 
         return (
-            <> 
-                <Container>
-                    <Header />
-                </Container>
-                <Container>
-                    <Row>
-                        <Col lg={{size: 5, offset: 0}}>
-                           {randomChar}
-                        </Col>
-                    </Row>
-                    <Button onClick={this.onToogle}> Toogle randomChar </Button>
-                    <CharacterPage/>
-                    <BooksPage/>
-                    <HousesPage/>
-                </Container>
-            </>
+            <Router>
+                <div className='app'> 
+                    <Container>
+                        <Header />
+                    </Container>
+                    <Container>
+                        <Row>
+                            <Col lg={{size: 5, offset: 0}}>
+                            {randomChar}
+                            </Col>
+                        </Row>
+                        <Button onClick={this.onToogle}> Toogle randomChar </Button>
+                        <Routes>
+                            <Route path='/' element={<App />}/>
+                            <Route path='/characters' element={<CharacterPage/>}/>
+                            <Route path='/houses' element={<HousesPage/>}/>
+                            <Route path='/booksItem' element={<BooksItem/>}/>
+                            {/* <Route path='/books/' element={<BooksPage/>}>
+                                <Route path=':bookId' element={<BooksItem/>} />
+                            </Route> */}
+                           
+
+                        </Routes>
+                    </Container>
+                </div>
+            </Router>
+
         );  
     }
 };

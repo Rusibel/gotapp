@@ -63,7 +63,7 @@ export default class GotService {
 
     _transformHouse(house) {
         for (let value in house) {
-            if (house[value] === ''){
+            if (house[value].length < 2){
                 house[value] = 'no data'
             }
         }
