@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Spinner from '../spinner';
 import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types';
 
 
 const ItemsList = styled.div`
@@ -29,36 +30,26 @@ const ItemsListItem = styled.div`
     border-radius: 0;
     cursor: pointer;
 `;
-export default class ItemList extends Component {
+export default function ItemList ({getData, onItemSelected,renderItem}){
 
+    const [itemList, updateList] = useState([]);
 
-    state ={
-        itemList: null
-    }
-
-    componentDidMount() {
-        
-        const{getData} = this.props;
-
+    useEffect(() => {
         getData ()
-            .then((itemList) => {
-                this.setState({
-                    itemList
-                })
+            .then((data) => {
+                updateList(data)
             })
+    }, [])
 
-    }
-
-    // }
     
-    renderItems(arr) {
+    function renderItems(arr) {
         return arr.map((item, i) => {
             const{id} = item;
-            const label = this.props.renderItem(item);
+            const label = renderItem(item);
             return (
                 <ItemsListItem 
                 key={id}
-                onClick={() => this.props.onItemSelected(id)}
+                onClick={() => onItemSelected(id)}
                 >
                         {label} 
     
@@ -67,25 +58,16 @@ export default class ItemList extends Component {
         })
     }
 
-    render() {
-        const{itemList} = this.state;
-
-
-        if(!itemList){
-            return <Spinner/>;
-        }
-        
-        const items = this.renderItems(itemList);
-
-        return (
-            <ItemsList >
-                {items}
-            </ItemsList>
-        );
+    if(!itemList){
+        return <Spinner/>;
     }
+    
+    const items = renderItems(itemList);
+
+    return (
+        <ItemsList >
+            {items}
+        </ItemsList>
+    );
 }
 
-ItemList.defaultProps ={
-    onItemSelected: () => {},
-    getData: () => {}
-}
