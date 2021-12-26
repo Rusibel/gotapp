@@ -48,7 +48,7 @@ class App extends Component {
     
     render() {  
         const {randomCharVisibility, error} = this.state;
-        const randomChar = randomCharVisibility ? <RandomChar/> : null; 
+        const randomChar = randomCharVisibility ? <RandomChar interval={10000}/> : null; 
 
         if(error){
             return<ErrorMessage/>

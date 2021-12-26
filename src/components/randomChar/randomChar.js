@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import GotService from '../../services/gotService';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
+import PropTypes from 'prop-types';
 
 const RandomCharBlock = styled.div`
     background-color: #fff;
@@ -60,7 +61,7 @@ export default class RandomChar extends Component {
     componentDidMount() {
         console.log('mounting');
         this.updateChar();
-        this.timerId = setInterval(this.updateChar, 1500);
+        this.timerId = setInterval(this.updateChar, this.props.interval);
     }
 
     componentWillUnmount() {
@@ -74,6 +75,9 @@ export default class RandomChar extends Component {
         loading: true,
         error: false
     }
+    // static defaultProps = {
+    //     interval: 15000
+    // }
 
     onError = (err) => {
         this.setState({
@@ -112,6 +116,23 @@ export default class RandomChar extends Component {
             </RandomCharBlock>
         );
     }
+}
+
+RandomChar.defaultProps = {
+    interval: 15000
+}
+// RandomChar.propTypes = {
+//     interval: (props, propName, componentName) => {
+//         const value = props[propName];
+
+//         if(typeof value === 'number' && !isNaN(value)) {
+//             return null
+//         }
+//         return new TypeError(`${componentName}: ${propName} must be a number`)
+//     }
+// }
+RandomChar.propTypes = {
+    interval: PropTypes.number
 }
 
 const View = ({char}) => {

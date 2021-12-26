@@ -43,10 +43,12 @@ export default class BooksPage extends Component {
                 getData={this.gotService.getAllBooks}
                 renderItem={({name, numberOfPages, id}) => (
                 <><span>{name} ({numberOfPages})</span>
-                    <Link
-                    key={id}
-                    to={`/books/${id}`}
-                    >     go to: {id} {name}</Link>
+                    <button>
+                        <Link
+                        key={id}
+                        to={`/books/${id}`}
+                        >     go to: {id} {name}</Link> 
+                    </button>
                 </>
                 )}/>
         )
