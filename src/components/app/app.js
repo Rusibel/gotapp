@@ -5,16 +5,11 @@ import GotService from '../../services/gotService';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
-import CharacterPage from '../pages/characterPage';
-import BooksPage from '../pages/booksPage';
-import HousesPage from '../pages/housesPage';
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    // Link
-  } from "react-router-dom";
-import { BooksItem } from '../pages/booksPage';
+// import CharacterPage from '../pages/characterPage';
+// import BooksPage from '../pages/booksPage';
+// import HousesPage from '../pages/housesPage';
+import { Outlet } from "react-router-dom";
+// import { BooksItem } from '../pages/booksPage';
 
 const Button = styled.button`
     background-color: #fff;
@@ -22,6 +17,11 @@ const Button = styled.button`
     margin-bottom: 50px;
     padding: 5px 15px;
 `
+// class Appi extends Component{
+//     render(){
+//         return <div> Die Motherfacker!!!</div>
+//     }
+// }
 class App extends Component {
     gotService = new GotService();
     state = {
@@ -55,7 +55,7 @@ class App extends Component {
         } 
 
         return (
-            <Router>
+            <>
                 <div className='app'> 
                     <Container>
                         <Header />
@@ -67,20 +67,10 @@ class App extends Component {
                             </Col>
                         </Row>
                         <Button onClick={this.onToogle}> Toogle randomChar </Button>
-                        <Routes>
-                            <Route path='/' element={<App />}/>
-                            <Route path='/characters' element={<CharacterPage/>}/>
-                            <Route path='/houses' element={<HousesPage/>}/>
-                            <Route path='/booksItem' element={<BooksItem/>}/>
-                            {/* <Route path='/books/' element={<BooksPage/>}>
-                                <Route path=':bookId' element={<BooksItem/>} />
-                            </Route> */}
-                           
-
-                        </Routes>
+                        <Outlet />
                     </Container>
                 </div>
-            </Router>
+            </>
 
         );  
     }

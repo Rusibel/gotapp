@@ -1,23 +1,22 @@
 import React, {Component} from 'react';
 import GotService from '../../../services/gotService';
 import ItemDetails, {Field} from '../../itemDetails';
+import { useParams } from "react-router-dom";
 
-export default class BooksItem extends Component {
-    gotService = new GotService() ;
-    state = {
-        selectedBook: 3
-    }
 
-    render() {
-        return (
+export default function BooksItem() {
+    const gotService = new GotService() ;
+
+    let params = useParams();
+    return (
+
             <ItemDetails 
-            itemId={this.state.selectedBook} 
-            getData={this.gotService.getBook}>
+            itemId={params.bookId} 
+            getData={gotService.getBook}>
                 <Field field='numberOfPages' label='numberOfPages'/>
                 <Field field='publiser' label='publiser'/>
                 <Field field='released' label='released'/>
             </ItemDetails>
-        )
-    }
-
-}
+       
+    );
+  }

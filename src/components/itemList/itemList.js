@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import Spinner from '../spinner';
+import {Link} from 'react-router-dom'
 
 
 const ItemsList = styled.div`
@@ -56,10 +57,11 @@ export default class ItemList extends Component {
             const label = this.props.renderItem(item);
             return (
                 <ItemsListItem 
-                    key={id}
-                    onClick={() => this.props.onItemSelected(id)}
-                    >
-                    {label}
+                key={id}
+                onClick={() => this.props.onItemSelected(id)}
+                >
+                        {label} 
+    
                 </ItemsListItem>
             )
         })

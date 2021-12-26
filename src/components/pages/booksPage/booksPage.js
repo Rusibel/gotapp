@@ -4,13 +4,15 @@ import ItemList from '../../itemList';
 import ItemDetails, {Field} from '../../itemDetails';
 import ErrorMessage from '../../errorMessage';
 import RowBlock from '../../rowBlock';
+import { BooksItem } from '.';
+import { Link } from 'react-router-dom';
 
 
 export default class BooksPage extends Component {
 
     gotService = new GotService() ;
     state = {
-        selectedBook: 12,
+        selectedBook: null,
         error: false
     }
 
@@ -39,7 +41,14 @@ export default class BooksPage extends Component {
             <ItemList 
                 onItemSelected={this.onItemSelected}
                 getData={this.gotService.getAllBooks}
-                renderItem={({name, numberOfPages}) => (<><span>{name} ({numberOfPages})</span><button>ClickMe</button></>)}/>
+                renderItem={({name, numberOfPages, id}) => (
+                <><span>{name} ({numberOfPages})</span>
+                    <Link
+                    key={id}
+                    to={`/books/${id}`}
+                    >     go to: {id} {name}</Link>
+                </>
+                )}/>
         )
 
         const bookDetails =(
